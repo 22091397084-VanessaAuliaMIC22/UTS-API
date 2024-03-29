@@ -44,6 +44,7 @@ class ContactController extends Controller
 
     public function update(Request $request, Contact $contact)
     {
+        //validasi data jika diperlukan
         $request->validate([
             'first_name' => 'required|string|max:100',
             'last_name' => 'nullable|string|max:100',
@@ -51,13 +52,16 @@ class ContactController extends Controller
             'phone' => 'nullable|string|max:20',
         ]);
 
+        //update data ke dalam database
         $contact->update($request->all());
 
         return redirect()->route('contacts.index')->with('success', 'Contact updated successfully.');
     }
 
+
     public function destroy(Contact $contact)
     {
+        //hapu data dari database
         $contact->delete();
 
         return redirect()->route('contacts.index')->with('success', 'Contact deleted successfully.');
